@@ -1,5 +1,6 @@
 %% estimatePi.m
 % This function computes estimates of the Markov transition matrix of the observed state variables in the basic firm entry and exit model used as an example in CentER's Empirical Industrial Organization II. 
+% another hohooh
 
 %{
 The function |estimatePi| computes a frequency estimate of the Markov transition matrix $\Pi$ from state transition data.
