@@ -1,6 +1,6 @@
 %% fixedPoint.m
 % This function computes a fixed point of the contraction Psi by successive approximations
-
+% final hohooh
 %{
 	The function |fixedPoint| computes the fixed point $U$ of the Bellman-like operator $\Psi$, using the method of successive approximations. It is easy to show that $\Psi$ is a contraction, so that the method of successive approximations converges linearly and globally to a point within a positive maximum absolute distance |tolFixedPoint| (see Appendix \ref{contractions.computation}).
 %}
