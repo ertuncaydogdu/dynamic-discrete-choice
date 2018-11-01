@@ -1,6 +1,6 @@
 %% bellman.m
 %  This function iterates once on the Bellman-like operator for the basic firm entry and exit model used as an example in CentER's Empirical Industrial Organization II
-
+% ohohoohoho
 %{		
 The expected discounted profits net of $\varepsilon_{t}(a)$ immediately following choice $a$ at time $t$, $U_a(X_t,A_{t-1})$, satisfy a recursive system $U_0=\Psi_0(U_0,U_1)$ and $U_1=\Psi_1(U_0,U_1)$ or, with $U\equiv(U_0,U_1)$ and $\Psi\equiv(\Psi_0,\Psi_1)$, simply $U=\Psi(U)$ (see e.g. \cite{nh94:rust}). Here, $\Psi$ is a Bellman-like operator that embodies the model's dynamic specification and that depends on the flow payoffs $u_0$ and $u_1$, the Markov transition matrix $\Pi$, and the discount factor $\rho$. Its elements are the operators $\Psi_0$ and $\Psi_1$, with $\Psi_a$ implicitly defined by the right hand side of
 	\begin{equation}\label{eq:bellman}
