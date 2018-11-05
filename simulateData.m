@@ -45,13 +45,13 @@ iX = randomDiscrete(pInf*ones(1,nFirms));
 %{
 Using these $N$ simulated values of $X_1$, and $N$ simulated values of $-\Delta\varepsilon_1\equiv\varepsilon_1(0)-\varepsilon_1(1)$ that are stored in |deltaEpsilon|, it simulates $N$ values of the first choice by using that $A_1=1$ if $\Delta U(X_1,0)>-\Delta\varepsilon_1$ and $A_1=0$ otherwise. These are stored in the $1\times N$ vector |choices|.
 %}		
-deltaEpsilon = random('ev',zeros(1,nFirms),ones(1,nFirms))-random('ev',zeros(1,nFirms),ones(1,nFirms));
-choices  = deltaU(iX,1)' > deltaEpsilon;
+deltaEpsilon    = random('ev',zeros(1,nFirms),ones(1,nFirms))-random('ev',zeros(1,nFirms),ones(1,nFirms));
+choices         = deltaU(iX,1)' > deltaEpsilon;
 %{
 	Finally, $N$ values of $X_t$ are simulated, using the transition matrix $\Pi$ and |randomDiscrete|, and their indices added as a row to the bottom of the $(t-1)\times N$ matrix |iX|; and $N$ values of $A_t$ are simulated, using that  $A_t=1$ if $\Delta U(X_t,A_{t-1})>-\Delta\varepsilon_t$ and $A_t=0$ otherwise, and stored as a row at the bottom of the $(t-1)\times N$ matrix |choices|; recursively for $t=2,\ldots,T$.
 %}
 for t = 2:nPeriods
-	iX = [iX;randomDiscrete(capPi(iX(end,:),:)')];
-	deltaEpsilon  = random('ev',zeros(1,nFirms),ones(1,nFirms))-random('ev',zeros(1,nFirms),ones(1,nFirms));
-	choices = [choices;(deltaU(iX(end,:)+nSuppX*choices(end,:)) > deltaEpsilon)];
+	iX              = [iX;randomDiscrete(capPi(iX(end,:),:)')];
+	deltaEpsilon    = random('ev',zeros(1,nFirms),ones(1,nFirms))-random('ev',zeros(1,nFirms),ones(1,nFirms));
+	choices         = [choices;(deltaU(iX(end,:)+nSuppX*choices(end,:)) > deltaEpsilon)];
 end

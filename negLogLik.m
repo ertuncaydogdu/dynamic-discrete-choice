@@ -32,23 +32,23 @@ The function |negLogLik| requires the following input arguments:
 	\end{dictionary}
 The function |negLogLik| first stores the number $K$ of elements of |supportX| in a scalar |nSuppX|.
 %}
-nSuppX = size(supportX,1);
+nSuppX          = size(supportX,1);
 %{
 Next, it computes the flow payoffs $u_0$ (|u0|) and $u_1$ (|u1|), the choice-specific net expected discounted values $U_0$ (|capU0|) and $U_1$ (|capU1|), their contrast $\Delta U$ (|deltaU|), and the implied probabilities $1/\left[1+\exp(\Delta U)\right]$ of not serving the market (|pExit|) for the inputted parameter values. Note that this implements the NFXP procedure's inner loop.
 %}
-[u0,u1] = flowpayoffs(supportX,beta,delta);
-[capU0,capU1] = fixedPoint(u0,u1,capPi,rho,tolFixedPoint,bellman,[],[]);
-deltaU = capU1-capU0;
-pExit = 1./(1+exp(deltaU));
+[u0,u1]         = flowpayoffs(supportX,beta,delta);
+[capU0,capU1]   = fixedPoint(u0,u1,capPi,rho,tolFixedPoint,bellman,[],[]);
+deltaU          = capU1-capU0;
+pExit           = 1./(1+exp(deltaU));
 %{
 \paragraph{Log Partial Likelihood}
 The contribution to the likelihood of firm $n$'s choice in period $t$ is the conditional choice probability 
 	\[p(a_{tn}|x_{tn},a_{(t-1)n})=a_{tn}+\frac{1-2 a_{tn} }{1+\exp\left[\Delta U(x_{tn},a_{(t-1)n})\right]},\] 
 with $a_{0n}=0$. The function |negLogLik| first computes these probabilities for each firm $n$ and period $t$ and stores them in a $T\times N$ matrix |p|. Then, it returns minus the sum of their logs, the log partial likelihood for the conditional choices, in |nll|. 
 %}
-laggedChoices = [zeros(1,size(choices,2));choices(1:end-1,:)];
-p = choices + (1-2*choices).*pExit(iX+nSuppX*laggedChoices);
-nll = -sum(sum(log(p)));
+laggedChoices   = [zeros(1,size(choices,2));choices(1:end-1,:)];
+p               = choices + (1-2*choices).*pExit(iX+nSuppX*laggedChoices);
+nll             = -sum(sum(log(p)));
 %{
 \paragraph{Score}
 If two or more output arguments are demanded from |negLogLik|, it computes and returns minus the partial likelihood
@@ -128,18 +128,18 @@ if nargout>=2
     %{
     Next, it computes $\partial\bar U/\partial\theta'$ (|dUbar_dTheta|) and $\partial\Delta U/\partial\theta'$ (|dDeltaU_dTheta|).
     %}
-	dUbar_dTheta   = (eye(4*nSuppX)-dPsi_dUbar)\dPsi_dTheta;
-	dDeltaU_dTheta    = dUbar_dTheta(2*nSuppX+1:4*nSuppX,:)-dUbar_dTheta(1:2*nSuppX,:);	
+	dUbar_dTheta        = (eye(4*nSuppX)-dPsi_dUbar)\dPsi_dTheta;
+	dDeltaU_dTheta      = dUbar_dTheta(2*nSuppX+1:4*nSuppX,:)-dUbar_dTheta(1:2*nSuppX,:);	
     %{
     Finally, it computes the $1\times 3$ vector $-\partial\log\left[\prod_{t=1}^T p(a_{tn}|x_{tn},a_{(t-1)n})\right]/\partial \theta'$ for each $n$, stacks these individual (minus) score contributions in the $N\times 3$ matrix |negFirmScores|, and sums them to compute minus the score vector, |negScore|.   
     %}			
-    nTheta	= size(dUbar_dTheta,2);    
-    negFirmScores = repmat((1-2*choices).*(1-p),[1 1 nTheta]);
+    nTheta          = size(dUbar_dTheta,2);    
+    negFirmScores   = repmat((1-2*choices).*(1-p),[1 1 nTheta]);
     for i=1:nTheta
         negFirmScores(:,:,i) = negFirmScores(:,:,i).*dDeltaU_dTheta(iX+nSuppX*laggedChoices+2*(i-1)*nSuppX);
     end
-    negFirmScores=squeeze(sum(negFirmScores,1));
-    negScore = sum(negFirmScores)';
+    negFirmScores   = squeeze(sum(negFirmScores,1));
+    negScore        = sum(negFirmScores)';
 end
 %{
 \paragraph{Information Matrix}

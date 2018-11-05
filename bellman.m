@@ -31,13 +31,13 @@ $U_1(x^i,j-1)$.
 \end{dictionary}	
 	To this end, |bellman| first computes the surpluses $R_0(x)$ and $R_1(x)$ in (\ref{eq:surplus}) for all $x\in\cal{X}$ and stacks these in $K\times 1$ vectors |R0| and |R1|.
 %}
-r0 = log(exp(capU0(:,1))+exp(capU1(:,1)));
-r1 = log(exp(capU0(:,2))+exp(capU1(:,2)));
+r0          = log(exp(capU0(:,1))+exp(capU1(:,1)));
+r1          = log(exp(capU0(:,2))+exp(capU1(:,2)));
 %{
 Then, it applies (\ref{eq:bellman}) to compute new values of |capU0| and |capU1|.
 %}
-capU0 = u0 + rho*capPi*r0*[1 1];
-capU1 = u1 + rho*capPi*r1*[1 1];
+capU0       = u0 + rho*capPi*r0*[1 1];
+capU1       = u1 + rho*capPi*r1*[1 1];
 %{
 Here, the conditional expectation over $X_{t+1}$ in (\ref{eq:bellman}) is taken by premultiplying the vectors |r0| and |r1| by the Markov transition matrix |capPi|. The vectors |r0| and |r1| are postmultiplied by |[1 1]| because the surpluses, and therefore the continuation payoffs, are independent of the past choice that indexes the columns of |capU0| and |capU1|.
 	

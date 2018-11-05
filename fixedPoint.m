@@ -25,21 +25,21 @@ function [capU0,capU1] = fixedPoint(u0,u1,capPi,rho,tolFixedPoint,bellman,capU0,
 	\end{dictionary}
 The function |fixedPoint| first stores the number $K$ of elements of |supportX| in a scalar |nSuppX|.
 	%}
-nSuppX = size(capPi,1);
+nSuppX      = size(capPi,1);
 %{
 The starting values for $U_0$ and $U_1$ are set to $0$ if the input arguments |capU0| and |capU1| are empty.
 %}
 if isempty(capU0)
-	capU0 = zeros(nSuppX,2);
+	capU0   = zeros(nSuppX,2);
 end
 if isempty(capU1)
-	capU1 = zeros(nSuppX,2);
+	capU1   = zeros(nSuppX,2);
 end
 %{
 	The $K\times 2$ matrices |inU0| and |inU1| store the values of $U$ that are fed into the operator $\Psi$, for comparison with the value of $\Psi(U)$ that is subsequently stored in |capU0| and |capU1|. They are initialized to deviate from |capU0| and |capU1| by more than |tolFixedPoint|, so that the |while| statement allows at least one iteration of $\Psi$, and stops as soon as $\max\{\max|\Psi_0(U)-U_0|,\max|\Psi_1(U)-U_1|\}$ no longer exceeds the tolerance level in |tolFixedPoint|.
 %}
-inU0 = capU0+2*tolFixedPoint;
-inU1 = capU1+2*tolFixedPoint;
+inU0        = capU0+2*tolFixedPoint;
+inU1        = capU1+2*tolFixedPoint;
 while (max(max(abs(inU0-capU0)))>tolFixedPoint) || (max(max(abs(inU1-capU1)))>tolFixedPoint);
 	inU0 = capU0;
 	inU1 = capU1;

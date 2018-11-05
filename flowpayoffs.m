@@ -21,7 +21,7 @@ That is, the rows correspond to the support points of $X_t$, and the columns to 
 
 The function |flowpayoffs| first stores the number $K$ of elements of |supportX| in a scalar |nSuppX|.
 %}
-nSuppX = size(supportX,1);
+nSuppX  = size(supportX,1);
 %{
 	Then, it constructs a $K\times 2$ matrix |u0| with the value of
 	\[
@@ -52,8 +52,8 @@ nSuppX = size(supportX,1);
 		\end{array}\right].
 	\]
 %}
-u0 = [zeros(nSuppX,1) -delta(1)*ones(nSuppX,1)];
-u1 = [ones(nSuppX,1) supportX]*beta*[1 1]-delta(2)*ones(nSuppX,1)*[1 0];
+u0      = [zeros(nSuppX,1) -delta(1)*ones(nSuppX,1)];
+u1      = [ones(nSuppX,1) supportX]*beta*[1 1]-delta(2)*ones(nSuppX,1)*[1 0];
 %{
 	You can change the specification of the flow profits by editing these two lines of code.
 %}
